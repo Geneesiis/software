@@ -6,34 +6,31 @@ import com.example.software.Service.LibroService;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/carrito")
+@CrossOrigin
 public class CarritoController {
+
     private final List<Libro> carrito = new ArrayList<>();
 
     @Autowired
-    private LibroService libroServ;
+    private LibroService libroService;
 
     @PostMapping("/agregar/{id}")
-    public String agregarLibro(@PathVariable int id) {
-        Libro libro = libroServ.getLibroId(id);
-        if (libro != null){
-            carrito.add(libro);
-            return "El libro se agregó al carrito: " + libro.getTitulo();
+    public String agregarLibro(@PathVariable Long id) {
+        Optional<Libro> libroOpt = libroService.buscarPorId(id);
+        if (libroOpt.isPresent()) {
+            carrito.add(libroOpt.get());
+            return "El libro se agregó al carrito: " + libroOpt.get().getTitulo();
         }    
         return "El libro no fue encontrado";
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public String eliminarLibro(@PathVariable int id){
-        boolean eliminado = carrito.removeIf(libro -> libro.getId() == id);
+    public String eliminarLibro(@PathVariable Long id){
+        boolean eliminado = carrito.removeIf(libro -> libro.getId().equals(id));
         return eliminado ? "El libro ha sido eliminado" : "El libro no fue encontrado";
     }
 

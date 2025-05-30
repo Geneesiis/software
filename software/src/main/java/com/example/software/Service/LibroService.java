@@ -1,6 +1,7 @@
 package com.example.software.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,37 +11,36 @@ import com.example.software.Repository.LibroRepository;
 
 @Service
 public class LibroService {
+
     @Autowired
     private LibroRepository libroRepository;
 
-    public List<Libro> getLibros() {
-        return libroRepository.obtenerLibros();
+    public List<Libro> obtenerLibros() {
+        return libroRepository.findAll();
     }
 
-    public Libro saveLibro(Libro libro) {
-        return libroRepository.guardar(libro);
+    public Optional<Libro> buscarPorId(Long id) {
+        return libroRepository.findById(id);
     }
 
-    public Libro getLibroId(int id) {
-        return libroRepository.buscarPorId(id);
+    public Optional<Libro> buscarPorTitulo(String titulo) {
+        return libroRepository.findByTitulo(titulo);
     }
 
-    public Libro updateLibro(Libro libro) {
-        return libroRepository.actualizar(libro);
+    public Libro guardar(Libro libro) {
+        return libroRepository.save(libro);
     }
 
-    public String deleteLibro(int id) {
-        libroRepository.eliminar(id);
-        return "libro eliminado";
+    public Libro actualizar(Libro libro) {
+        // Se asume que el libro ya tiene un ID válido para actualizar
+        return libroRepository.save(libro);
     }
 
-    // LA ACCIÓN LA HACE EL SERVICE
-    public int totalLibros() {
-        return libroRepository.obtenerLibros().size();
+    public void eliminar(Long id) {
+        libroRepository.deleteById(id);
     }
 
-    // LA ACCIÓN LA HACE EL MODELO
-    public int totalLibrosV2() {
-        return libroRepository.totalLibros();
+    public long totalLibros() {
+        return libroRepository.count();
     }
 }

@@ -1,7 +1,7 @@
 package com.example.software.Service;
 
 import com.example.software.Model.Usuario;
-import com.example.software.Repository.UsusarioRepository;
+import com.example.software.Repository.UsuarioRepository;
 
 import java.util.Optional;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
     
     @Autowired
-    private UsusarioRepository rep;
+    private UsuarioRepository rep;
 
     public Usuario registrar(Usuario u){
         return rep.save(u);

@@ -3,52 +3,54 @@ package com.example.software.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.software.Model.Libro;
 import com.example.software.Service.LibroService;
 
 @RestController
 @RequestMapping("/api/v1/libros")
+@CrossOrigin
 public class LibroController {
+
     @Autowired
-    private LibroService LibroService;
+    private LibroService libroService;
 
     @GetMapping
-    public List<Libro> listarLibros() {
-        return LibroService.getLibros();
+    public List<Libro> listar() {
+        return libroService.obtenerLibros();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Libro> obtener(@PathVariable Long id) {
+        return libroService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Libro agregarLibro(@RequestBody Libro libro) {
-        return LibroService.saveLibro(libro);
+    public Libro guardar(@RequestBody Libro libro) {
+        return libroService.guardar(libro);
     }
 
-    @GetMapping("{id}")
-    public Libro buscarLibro(@PathVariable int id){
-        return LibroService.getLibroId(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Libro> actualizar(@PathVariable Long id, @RequestBody Libro libro) {
+        if (!libroService.buscarPorId(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        libro.setId(id);  // asegúrate de setear el id correcto
+        Libro actualizado = libroService.actualizar(libro);
+        return ResponseEntity.ok(actualizado);
     }
 
-    @PutMapping("{id}")
-    public Libro actualizarLibro(@PathVariable int id, @RequestBody Libro libro){
-        // el id lo usaremos mas adelante
-        return LibroService.updateLibro(libro);
-    }
-
-    @DeleteMapping("{id}")
-    public String eliminarLibro(@PathVariable int id) {
-        return LibroService.deleteLibro(id);
-    }
-
-    @GetMapping("/total")
-    public int totalLibrosV2() {
-        return LibroService.totalLibrosV2();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        if (!libroService.buscarPorId(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        libroService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }
+
