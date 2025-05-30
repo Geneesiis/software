@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.example.software.Model.Libro;
 
 @Repository
-public class libroRepository {
+public class LibroRepository {
     private List<Libro> listaLibros = new ArrayList<>();
 
-    public libroRepository() {
+    public LibroRepository() {
         listaLibros.add(new Libro(1, "Base de datos", "Alan Brito", "Pearson", "Aprende a utilizar MYSQL y sus herramientas", "Informatica y Telecomunicaciones", "300"));
         listaLibros.add(new Libro(2, "Redes de Computadoras", "Juan Pérez", "McGraw-Hill", "Fundamentos de redes y su configuración", "Informatica y Telecomunicaciones", "280"));
         listaLibros.add(new Libro(3, "Seguridad Informática", "María García", "Alfaomega", "Protección contra ciberataques y criptografía", "Informatica y Telecomunicaciones", "250"));

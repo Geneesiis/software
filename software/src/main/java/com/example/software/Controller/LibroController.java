@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.software.Model.Libro;
-import com.example.software.Servicie.LibroService;
+import com.example.software.Service.LibroService;
 
 @RestController
 @RequestMapping("/api/v1/libros")
@@ -52,4 +52,3 @@ public class LibroController {
         return LibroService.totalLibrosV2();
     }
 }
-
