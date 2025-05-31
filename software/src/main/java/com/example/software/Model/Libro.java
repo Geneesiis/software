@@ -22,6 +22,8 @@ public class Libro {
     private String editorial;
     private String descripcion;
     private int paginas;
+    private int stock ;
+
 
     private String categoria;  // O cambia a enum o relación entidad
 }

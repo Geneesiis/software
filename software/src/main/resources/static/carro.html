@@ -117,16 +117,15 @@
 
       <!-- Notificaciones -->
       <div class="dropdown">
-        <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a id="notificacionesDropdown" class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-bell me-1"></i> Notificaciones
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            0
-          </span>
+          <span id="badgeNotificaciones" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end mt-2 p-2" style="min-width: 250px;">
+        <ul id="listaNotificaciones" class="dropdown-menu dropdown-menu-end mt-2 p-2" style="min-width: 250px;">
           <li class="text-center text-muted">🔕 Sin notificaciones por ahora</li>
         </ul>
       </div>
+
 
       <a href="reporte.html" class="nav-link"><i class="fa-solid fa-bug me-1"></i> Reportar Incidencia</a>
       <a href="login.html" class="nav-link"><i class="fa-solid fa-right-from-bracket me-1"></i> Cerrar Sesión</a>

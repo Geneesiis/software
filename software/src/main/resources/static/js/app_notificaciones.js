@@ -114,4 +114,40 @@ function limpiarFormulario() {
     NotificacionEnEdicionId = null;
 }
 
+// Función para cargar notificaciones
+function cargarNotificaciones() {
+  fetch(API_URL_NOTIF)
+    .then(res => res.json())
+    .then(notificaciones => {
+      const lista = document.getElementById("listaNotificaciones");
+      const badge = document.getElementById("badgeNotificaciones");
+
+      // Si no hay notificaciones
+      if (!notificaciones || notificaciones.length === 0) {
+        lista.innerHTML = '<li class="text-center text-muted">🔕 Sin notificaciones por ahora</li>';
+        badge.style.display = "none";
+        return;
+      }
+
+      // Mostrar badge con cantidad
+      badge.textContent = notificaciones.length;
+      badge.style.display = "inline";
+
+      // Generar lista dinámica
+      lista.innerHTML = "";
+      notificaciones.forEach(n => {
+        const li = document.createElement("li");
+        li.classList.add("dropdown-item");
+        li.textContent = `${n.mensaje} (Para: ${n.destinatario})`;
+        lista.appendChild(li);
+      });
+    })
+    .catch(error => {
+      console.error("Error cargando notificaciones:", error);
+    });
+}
+
+// Llama esta función cuando cargue la página
+document.addEventListener("DOMContentLoaded", cargarNotificaciones);
+
 listarNotificacions();

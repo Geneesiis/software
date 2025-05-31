@@ -17,6 +17,7 @@ function listarLibros() {
                         <td>${libro.descripcion}</td>
                         <td>${libro.categoria}</td>
                         <td>${libro.paginas}</td>
+                        <td>${libro.stock}</td>
                         <td> 
                             <button class="btn btn-danger btn-sm" onclick="eliminarLibro(${libro.id})">🗑️ Eliminar</button> 
                             <button class="btn btn-warning btn-sm" onclick="buscarLibro(${libro.id})">✏️ Editar</button> 
@@ -36,6 +37,7 @@ function agregarLibros() {
     const descripcion = document.getElementById("descripcion").value;
     const categoria = document.getElementById("categoria").value;
     const paginas = document.getElementById("paginas").value;
+    const stock = document.getElementById("stock").value;
 
     const nuevoLibro = {
         titulo,
@@ -43,7 +45,8 @@ function agregarLibros() {
         editorial,
         descripcion,
         categoria,
-        paginas
+        paginas,
+        stock
     };
 
     fetch(API_URL, {
@@ -82,6 +85,7 @@ function buscarLibro(id) {
             document.getElementById("descripcion").value = libro.descripcion;
             document.getElementById("categoria").value = libro.categoria;
             document.getElementById("paginas").value = libro.paginas;
+            document.getElementById("stock").value = libro.stock;
 
             LibroEnEdicionId = libro.id;
 
@@ -103,6 +107,7 @@ function actualizarLibro(id) {
     const descripcion = document.getElementById("descripcion").value;
     const categoria = document.getElementById("categoria").value;
     const paginas = document.getElementById("paginas").value;
+    const stock = document.getElementById("stock").value;
 
     const libroActualizado = {
         id,
@@ -111,7 +116,8 @@ function actualizarLibro(id) {
         editorial,
         descripcion,
         categoria,
-        paginas
+        paginas,
+        stock
     };
 
     fetch(`${API_URL}/${id}`, {
@@ -135,6 +141,7 @@ function limpiarFormulario() {
     document.getElementById("descripcion").value = "";
     document.getElementById("categoria").value = "";
     document.getElementById("paginas").value = "";
+    document.getElementById("stock").value = "";
 
     const boton = document.getElementById("botonFormulario");
     if (boton) {
