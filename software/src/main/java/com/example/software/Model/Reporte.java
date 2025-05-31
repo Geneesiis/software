@@ -1,7 +1,5 @@
 package com.example.software.Model;
 
-import java.util.Optional;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,19 +10,15 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor // Genera un constructor con todos los campos.
+@AllArgsConstructor
 @NoArgsConstructor
 public class Reporte {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String usuarioReporta;
     private String titulo;
     private String descripcion;
-    
-    public static Optional<Reporte> map(Object o){
-        throw new UnsupportedOperationException("Unimplemented method 'map");
-    }
-
 }

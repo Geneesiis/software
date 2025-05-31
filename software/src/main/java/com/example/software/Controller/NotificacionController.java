@@ -1,49 +1,54 @@
 package com.example.software.Controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.software.Model.Notificacion;
 import com.example.software.Service.NotificacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/notificaciones")
+@CrossOrigin
 public class NotificacionController {
+
     @Autowired
-    private NotificacionService NotificacionService;
+    private NotificacionService notificacionService;
 
     @GetMapping
-    public List<Notificacion> listarNotificaciones() {
-        return NotificacionService.getNotificacions();
+    public List<Notificacion> listar() {
+        return notificacionService.getNotificacions();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Notificacion> obtener(@PathVariable Long id) {
+        return notificacionService.getNotificacionById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Notificacion agregarNotificacion(@RequestBody Notificacion notificacion) {
-        return NotificacionService.saveNotificacion(notificacion);
+    public Notificacion guardar(@RequestBody Notificacion notificacion) {
+        return notificacionService.saveNotificacion(notificacion);
     }
 
-    @GetMapping("{id}")
-    public Notificacion buscarNotificacion(@PathVariable int id){
-        return NotificacionService.getNotificacionId(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Notificacion> actualizar(@PathVariable Long id, @RequestBody Notificacion notificacion) {
+        if (!notificacionService.getNotificacionById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        notificacion.setId(id); // Asegura que se actualiza la notificación con el ID correcto
+        Notificacion actualizado = notificacionService.updateNotificacion(notificacion);
+        return ResponseEntity.ok(actualizado);
     }
 
-    @PutMapping("{id}")
-    public Notificacion actualizarNotificacion(@PathVariable int id, @RequestBody Notificacion notificacion){
-        // el id lo usaremos mas adelante
-        return NotificacionService.updateNotificacion(notificacion);
-    }
-
-    @DeleteMapping("{id}")
-    public String eliminarNotificacion(@PathVariable int id) {
-        return NotificacionService.deleteNotificacion(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        if (!notificacionService.getNotificacionById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        notificacionService.deleteNotificacion(id);
+        return ResponseEntity.noContent().build();
     }
 }

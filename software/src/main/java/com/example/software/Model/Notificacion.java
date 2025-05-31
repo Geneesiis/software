@@ -9,16 +9,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data //Genera getters, setters, toString, equals, hashCode y un constructor con los campos requeridos.
-@AllArgsConstructor // Genera un constructor con todos los campos.
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
-
 public class Notificacion {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String destinatario;
     private String mensaje;
-
 }

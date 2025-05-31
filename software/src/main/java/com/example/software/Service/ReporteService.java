@@ -1,6 +1,7 @@
 package com.example.software.Service;
 
-import  java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,40 +9,45 @@ import org.springframework.stereotype.Service;
 import com.example.software.Model.Reporte;
 import com.example.software.Repository.ReporteRepository;
 
-
 @Service
 public class ReporteService {
+
     @Autowired
     private ReporteRepository reporteRepository;
 
-    public List<Reporte> getReporte() {
-        return reporteRepository.obtenerReporte();
+    public List<Reporte> getReportes() {
+        return reporteRepository.findAll();
     }
 
-    public Reporte saveReporte (Reporte reporte) {
-        return reporteRepository.guardar(reporte);
+    public Reporte saveReporte(Reporte reporte) {
+        return reporteRepository.save(reporte);
     }
 
-    public Reporte getReporteId(int id) {
-        return reporteRepository.buscarPorId(id);
+    public Optional<Reporte> getReporteById(Long id) {
+        return reporteRepository.findById(id);
     }
 
-    public Reporte updateReporte (Reporte reporte) {
-        return reporteRepository.actualizar(reporte);
+    public Reporte updateReporte(Reporte reporte) {
+        if (reporteRepository.existsById(reporte.getId())) {
+            return reporteRepository.save(reporte);
+        }
+        return null; // O lanza una excepción personalizada
     }
 
-    public String deleteReporte(int id) {
-        reporteRepository.eliminar(id);
-        return "producto eliminado";
+    public String deleteReporte(Long id) {
+        if (reporteRepository.existsById(id)) {
+            reporteRepository.deleteById(id);
+            return "Reporte eliminado";
+        } else {
+            return "Reporte no encontrado";
+        }
     }
 
-    // LA ACCIÓN LA HACE EL SERVICE
-    public int totalReportes() {
-        return reporteRepository.obtenerReporte().size();
+    public long totalReportes() {
+        return reporteRepository.count();
     }
 
-    // LA ACCIÓN LA HACE EL MODELO
-    public int totalReportesV2() {
-        return reporteRepository.totalReportes();
+    public Optional<Reporte> getByUsuarioReporta(String usuarioReporta) {
+        return reporteRepository.findByUsuarioReporta(usuarioReporta);
     }
 }

@@ -1,46 +1,53 @@
 package com.example.software.Service;
 
-import java.util.List;
-
+import com.example.software.Model.Notificacion;
+import com.example.software.Repository.NotificacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.software.Model.Notificacion;
-import com.example.software.Repository.NotificacionRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificacionService {
+
     @Autowired
-    private NotificacionRepository NotificacionRepository;
+    private NotificacionRepository notificacionRepository;
 
     public List<Notificacion> getNotificacions() {
-        return NotificacionRepository.obtenerNotificacions();
+        return notificacionRepository.findAll();
     }
 
     public Notificacion saveNotificacion(Notificacion notificacion) {
-        return NotificacionRepository.guardar(notificacion);
+        return notificacionRepository.save(notificacion);
     }
 
-    public Notificacion getNotificacionId(int id) {
-        return NotificacionRepository.buscarPorId(id);
+    public Optional<Notificacion> getNotificacionById(Long id) {
+        return notificacionRepository.findById(id);
     }
 
     public Notificacion updateNotificacion(Notificacion notificacion) {
-        return NotificacionRepository.actualizar(notificacion);
+        // Asegura que existe antes de actualizar
+        if (notificacionRepository.existsById(notificacion.getId())) {
+            return notificacionRepository.save(notificacion);
+        }
+        return null; // o lanza una excepción personalizada
     }
 
-    public String deleteNotificacion(int id) {
-        NotificacionRepository.eliminar(id);
-        return "producto eliminado";
+    public String deleteNotificacion(Long id) {
+        if (notificacionRepository.existsById(id)) {
+            notificacionRepository.deleteById(id);
+            return "Notificación eliminada";
+        } else {
+            return "Notificación no encontrada";
+        }
     }
 
-    // LA ACCIÓN LA HACE EL SERVICE
-    public int totalNotificacions() {
-        return NotificacionRepository.obtenerNotificacions().size();
+    public long totalNotificacions() {
+        return notificacionRepository.count();
     }
 
-    // LA ACCIÓN LA HACE EL MODELO
-    public int totalNotificacionsV2() {
-        return NotificacionRepository.totalNotificacions();
+    public Optional<Notificacion> getByDestinatario(String destinatario) {
+        return notificacionRepository.findByDestinatario(destinatario);
     }
 }
