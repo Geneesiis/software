@@ -1,20 +1,20 @@
-API_URL="http://localhost:8080/api/v2/reportes";
+const API_URL = "http://localhost:8080/api/v2/reportes";
+
 
 
 function listarReportes() {
     fetch(API_URL)
         .then(response => response.json())
         .then(reportes => {
-            const tbody = document.querySelector("#tablaReportes tbody"); //se edito el querySelector 
+            const tbody = document.querySelector("#tablaReportes tbody");
             tbody.innerHTML = "";
             reportes.forEach(reporte => {
                 const fila = `
                     <tr>
                         <td>${reporte.id}</td>
-                        <td>${reporte.usuarioReporta}</td>
+                        <td>${reporte.usuario ? reporte.usuario.nombre : ''}</td>
                         <td>${reporte.titulo}</td>
                         <td>${reporte.descripcion}</td>
-
                         <td> 
                             <button class="btn btn-danger btn-sm" onclick="eliminarReporte(${reporte.id})">🗑️ Eliminar</button> 
                             <button class="btn btn-warning btn-sm" onclick="buscarReporte(${reporte.id})">✏️ Editar</button> 
@@ -25,57 +25,41 @@ function listarReportes() {
             });
         });
 }
-let Reportes = []; // Variable para almacenar la lista de cursos
-// Función para agregar un curso
+
 function agregarReportes() {
-    const usuarioReporta = document.getElementById("usuarioReporta").value;
+    const usuarioId = document.getElementById("usuarioId").value; // cambiar input para capturar id
     const titulo = document.getElementById("titulo").value;
     const descripcion = document.getElementById("descripcion").value;
-    
+
     const nuevoReporte = {
-        usuarioReporta,
+        usuario: { id: parseInt(usuarioId) }, 
         titulo,
         descripcion
     };
-    // Enviar el nuevo curso al servidor
-    // Se utiliza la API Fetch para enviar los datos al servidor
+
     fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevoReporte)
-    })// Enviar el nuevo curso al servidor
+    })
     .then(response => response.json())
     .then(data => {
         alert("Reporte agregado exitosamente");
-        listarReportes();// Actualizar la tabla de cursos
-        limpiarFormulario();// Limpiar el formulario
+        listarReportes();
+        limpiarFormulario();
     });
 }
-// Función para eliminar un curso
-function eliminarReporte(id) {
-    fetch(`${API_URL}/${id}`, { method: "DELETE" })
-        .then(response => {
-            if (response.ok) {
-                alert("Reporte eliminado exitosamente");
-                listarReportes();
-            }
-        });
-}
-// Función para buscar un curso por su ID y cargarlo en el formulario
-// Se utiliza la API Fetch para obtener los datos del curso desde el servidor
-let ReporteEnEdicionId = null; // Variable para almacenar el ID del curso en edición
+
 function buscarReporte(id) {
     fetch(`${API_URL}/${id}`)
         .then(response => response.json())
         .then(reporte => {
-            document.getElementById("usuarioReporta").value = reporte.usuarioReporta;
+            document.getElementById("usuarioId").value = reporte.usuario ? reporte.usuario.id : "";
             document.getElementById("titulo").value = reporte.titulo;
             document.getElementById("descripcion").value = reporte.descripcion;
 
-             // Guardar el ID del curso en edición
-             ReporteEnEdicionId = reporte.id;
-             
-            // Cambiar el botón de agregar por actualizar
+            ReporteEnEdicionId = reporte.id;
+
             const boton = document.getElementById("botonFormulario");
             if (boton) {
                 boton.textContent = "Actualizar reporte";
@@ -85,19 +69,17 @@ function buscarReporte(id) {
             }
         });
 }
-// Función para actualizar un curso
-// Se utiliza la API Fetch para enviar los datos actualizados al servidor
+
 function actualizarReporte(id) {
-    const usuarioReporta = document.getElementById("usuarioReporta").value;
+    const usuarioId = document.getElementById("usuarioId").value;
     const titulo = document.getElementById("titulo").value;
     const descripcion = document.getElementById("descripcion").value;
 
     const reporteActualizado = {
         id: id,
-        usuarioReporta: usuarioReporta,
-        titulo: titulo,
-        descripcion: descripcion
-
+        usuario: { id: parseInt(usuarioId) },
+        titulo,
+        descripcion
     };
 
     fetch(`${API_URL}/${id}`, {
@@ -112,23 +94,40 @@ function actualizarReporte(id) {
         limpiarFormulario();
     });
 }
-// Función para limpiar el formulario después de agregar o actualizar un curso
-// Se utiliza para restaurar el formulario a su estado inicial
+
 function limpiarFormulario() {
-    document.getElementById("usuarioReporta").value = "";
+    document.getElementById("usuarioId").value = "";
     document.getElementById("titulo").value = "";
     document.getElementById("descripcion").value = "";
 
-
-    // Restaurar botón
     const boton = document.getElementById("botonFormulario");
     boton.innerText = "Agregar Reporte";
     boton.setAttribute("onclick", "agregarReportes()");
 
-    // Resetear la variable global
-    ReporteEnEdicionId = null; // Resetear el ID después de limpiar
+    ReporteEnEdicionId = null;
 }
 
-// Cargar cursos al abrir la página
+function cargarUsuarios() {
+    fetch('http://localhost:8080/api/v2/usuarios') // Cambia por tu URL real
+        .then(res => res.json())
+        .then(usuarios => {
+            const select = document.getElementById('usuarioId');
+            select.innerHTML = '<option value="">Seleccione un usuario</option>'; // opción por defecto
 
-listarReportes();
+            usuarios.forEach(usuario => {
+                const option = document.createElement('option');
+                option.value = usuario.id;
+                option.textContent = usuario.nombre;
+                select.appendChild(option);
+            });
+        })
+        .catch(err => console.error('Error cargando usuarios:', err));
+}
+
+// Llama la función al cargar el script o la página
+document.addEventListener('DOMContentLoaded', cargarUsuarios);
+
+document.addEventListener('DOMContentLoaded', function() {
+    listarReportes();
+});
+

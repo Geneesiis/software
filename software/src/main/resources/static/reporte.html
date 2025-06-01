@@ -85,8 +85,11 @@
       <h2 class="mb-4 text-center"><i class="fa-solid fa-bug me-2"></i>Reporte de Incidencia</h2>
       <form id="formReporte" onsubmit="return false;">
         <div class="mb-3">
-          <label for="usuarioReporta" class="form-label">Usuario que reporta</label>
-          <input type="text" class="form-control" id="usuarioReporta" name="usuarioReporta" placeholder="Ingresa tu nombre o usuario" required>
+          <label for="usuarioId" class="form-label">Usuario que reporta</label>
+          <select class="form-select" id="usuarioId" name="usuarioId" required>
+            <option value="">Seleccione un usuario</option>
+            <!-- Opciones llenadas dinámicamente -->
+          </select>
         </div>
 
         <div class="mb-3">
@@ -100,15 +103,15 @@
         </div>
 
         <div class="d-grid">
-          <button type="submit" id="botonFormulario" class="btn btn-danger btn-lg rounded-pill" onclick="agregarReportes()">
-            <i class="fa-solid fa-paper-plane me-2"></i>Agregar Reporte
-          </button>
+          <button type="button" id="botonFormulario" class="btn btn-danger btn-lg rounded-pill" onclick="agregarReportes()">
+          <i class="fa-solid fa-paper-plane me-2"></i>Agregar Reporte
+        </button>
+
         </div>
       </form>
     </div>
   </div>
 </div>
-
 
 <!-- Tabla de Reportes -->
 <div class="container my-5">

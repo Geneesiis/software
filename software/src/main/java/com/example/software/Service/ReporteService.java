@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.software.Model.Reporte;
+import com.example.software.Model.Usuario;
 import com.example.software.Repository.ReporteRepository;
 
 @Service
@@ -47,7 +48,13 @@ public class ReporteService {
         return reporteRepository.count();
     }
 
-    public Optional<Reporte> getByUsuarioReporta(String usuarioReporta) {
-        return reporteRepository.findByUsuarioReporta(usuarioReporta);
+    // Obtiene reportes por Usuario (objeto)
+    public List<Reporte> getReportesByUsuario(Usuario usuario) {
+        return reporteRepository.findByUsuario(usuario);
+    }
+
+    // Obtiene reportes por usuarioId
+    public List<Reporte> getReportesByUsuarioId(Long usuarioId) {
+        return reporteRepository.findByUsuarioId(usuarioId);
     }
 }

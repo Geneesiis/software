@@ -2,6 +2,7 @@ package com.example.software.Controller;
 
 import com.example.software.Model.Reporte;
 import com.example.software.Service.ReporteService;
+import com.example.software.Service.UsuarioService;  // si tienes servicio para Usuario
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public class ReporteController {
 
     @Autowired
     private ReporteService reporteService;
+
+    @Autowired
+    private UsuarioService usuarioService;  // para obtener Usuario por id
 
     @GetMapping
     public List<Reporte> listarReportes() {
@@ -38,7 +42,7 @@ public class ReporteController {
         if (!reporteService.getReporteById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        reporte.setId(id); // Asegurarse de que el ID sea correcto
+        reporte.setId(id);
         Reporte actualizado = reporteService.updateReporte(reporte);
         return ResponseEntity.ok(actualizado);
     }
@@ -55,5 +59,17 @@ public class ReporteController {
     @GetMapping("/total")
     public long totalReportes() {
         return reporteService.totalReportes();
+    }
+
+    // Nuevo endpoint: Listar reportes por usuarioId
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Reporte>> listarReportesPorUsuario(@PathVariable Long usuarioId) {
+        // Aquí suponemos que tienes un UsuarioService para buscar usuario
+        return usuarioService.getUsuarioById(usuarioId)
+                .map(usuario -> {
+                    List<Reporte> reportes = reporteService.getReportesByUsuario(usuario);
+                    return ResponseEntity.ok(reportes);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }
