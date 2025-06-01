@@ -174,3 +174,30 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarLibros();
     limpiarFormularioReserva();
 });
+
+function exportarReservasCSV() {
+    fetch(API_URL_RESERVAS)
+        .then(res => res.json())
+        .then(data => {
+            let csv = "ID,Usuario,Libro,Fecha de Reserva\n";
+            data.forEach(r => {
+                const fila = [
+                    r.id,
+                    r.usuario?.nombre || '',
+                    r.libro?.titulo || '',
+                    r.fechaReserva
+                ].join(",");
+                csv += fila + "\n";
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "reservas.csv";
+            a.click();
+            URL.revokeObjectURL(url);
+        })
+        .catch(err => alert("Error al exportar CSV: " + err.message));
+}
+

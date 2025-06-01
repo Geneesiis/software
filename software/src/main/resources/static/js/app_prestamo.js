@@ -50,6 +50,8 @@ function agregarPrestamo() {
         alert("Préstamo agregado exitosamente");
         listarPrestamos();
         limpiarFormularioPrestamo();
+        mostrarGraficoPrestamosPorMes();
+
     });
 }
 
@@ -153,4 +155,115 @@ document.addEventListener("DOMContentLoaded", () => {
     listarPrestamos();
     cargarUsuarios();
     cargarLibros();
+});
+
+function exportarPrestamosCSV() {
+    const filas = document.querySelectorAll("#tablaPrestamos tbody tr");
+    if (filas.length === 0) {
+        alert("No hay datos para exportar.");
+        return;
+    }
+
+    let csv = "ID,Usuario,Libro,Fecha Préstamo,Fecha Devolución\n";
+
+    filas.forEach(fila => {
+        const columnas = fila.querySelectorAll("td");
+        const datos = [
+            columnas[0]?.textContent.trim(),
+            columnas[1]?.textContent.trim(),
+            columnas[2]?.textContent.trim(),
+            columnas[3]?.textContent.trim(),
+            columnas[4]?.textContent.trim()
+        ];
+        csv += datos.join(",") + "\n";
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = "prestamos.csv";
+    enlace.click();
+}
+
+let graficoPrestamos = null;
+
+function mostrarGraficoPrestamosPorMes() {
+  return fetch(API_URL_PRESTAMOS)
+    .then(res => res.json())
+    .then(data => {
+      if (data.length === 0) return;
+
+      // ... código para preparar labels y valores (igual que antes) ...
+
+      const fechas = data.map(p => new Date(p.fechaPrestamo));
+      const fechaMin = new Date(Math.min(...fechas));
+      const fechaMax = new Date(Math.max(...fechas));
+
+      const meses = [];
+      const labels = [];
+
+      const temp = new Date(fechaMin.getFullYear(), fechaMin.getMonth(), 1);
+      while (temp <= fechaMax) {
+        const clave = temp.toLocaleString('default', { month: 'short', year: 'numeric' });
+        meses.push(clave);
+        labels.push(clave);
+        temp.setMonth(temp.getMonth() + 1);
+      }
+
+      const conteoPorMes = {};
+      data.forEach(p => {
+        const mes = new Date(p.fechaPrestamo).toLocaleString('default', { month: 'short', year: 'numeric' });
+        conteoPorMes[mes] = (conteoPorMes[mes] || 0) + 1;
+      });
+
+      const valores = labels.map(label => conteoPorMes[label] || 0);
+
+      const ctx = document.getElementById('graficoPrestamos').getContext('2d');
+
+      // Si ya existe gráfico, lo destruimos antes de crear uno nuevo
+      if (graficoPrestamos) {
+        graficoPrestamos.destroy();
+      }
+
+      graficoPrestamos = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Cantidad de Préstamos',
+            data: valores,
+            fill: false,
+            borderColor: '#0d6efd',
+            tension: 0.3,
+            pointBackgroundColor: '#0d6efd'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Préstamos por Mes' }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+                precision: 0
+              }
+            }
+          }
+        }
+      });
+    });
+}
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  listarPrestamos();
+  cargarUsuarios();
+  cargarLibros();
+  mostrarGraficoPrestamosPorMes(); // 👈 Aquí
 });
