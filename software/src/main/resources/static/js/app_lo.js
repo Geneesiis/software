@@ -13,7 +13,7 @@ function login() {
     .then(data=> {
         if (data.result === "OK" ) {
             sessionStorage.setItem("nombreUsuario", data.nombre);
-            window.location.href = "/indexestudiante.html";
+            window.location.href = "/E_index.html";
         } else {
             alert ("Acceso denegado");
         }

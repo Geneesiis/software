@@ -8,5 +8,5 @@ function registrar() {
             password: document.getElementById("password").value
         })
     })  .then(res => res.json)
-        .then(data => alert("Usuario se creo con en Id: " + data.id, window.location.href = "/login.html"));
+        .then(data => alert("Usuario se creo con en Id: " + data.id, window.location.href = "/E_login.html"));
 }

@@ -30,12 +30,14 @@
     <input id="email" class="form-control mb-3" placeholder="Correo" />
     <input id="password" class="form-control mb-3" placeholder="Contraseña" type="password" />
     <button onclick="login()" class="btn btn-primary w-100 mb-2">Ingresar</button>
-    
-    <form id="redirectForm" method="GET" action="home.html" style="display:none;">
+    <a href="E_registro.html" class="d-block mt-2 text-decoration-none">¿No tienes cuenta? Regístrate</a>
+    <a href="T_login.html" class="d-block mt-2 text-decoration-none">¿Eres Trabajador?</a>
+
+    <form id="redirectForm" method="GET" action="C_home.html" style="display:none;">
       <input type="hidden" name="nombre" id="nombre">
     </form>
   </div>
 
-  <script src="js/app_trabajador_login.js"></script>
+  <script src="js/app_lo.js"></script>
 </body>
 </html>
