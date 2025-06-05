@@ -132,10 +132,10 @@
     <!-- Íconos y enlaces esenciales -->
     <div class="d-flex align-items-center flex-wrap position-relative">
       <a href="C_home.html" class="nav-link"><i class="fa-solid fa-house me-1"></i> Inicio</a>
-      <a href="#" class="nav-link"><i class="fa-solid fa-user-graduate me-1"></i> Estudiante</a>
-      <a href="E_carro.html" class="nav-link"><i class="fa fa-shopping-cart me-1"></i> Carrito</a>
+      <a href="T_index.html" class="nav-link"><i class="fa-solid fa-id-card me-1"></i> Trabajador</a>
       <a href="E_login.html" class="nav-link"><i class="fa-solid fa-right-from-bracket me-1"></i> Salir</a>
     </div>
+
   </div>
 </nav>
 
@@ -150,63 +150,46 @@
 <!-- Overlay para cerrar menú -->
 <div class="overlay" id="overlay"></div>
 
+<!-- Tabla de Préstamos -->
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="mb-4 text-primary fw-bold">Listado de Préstamos</h4>
+      <button class="btn btn-outline-danger mb-3" onclick="listarPrestamos()">🔄 Ver Préstamos</button>
 
-<!-- Sección de bienvenida -->
-<section class="container my-5">
-  <div class="p-5 bg-light rounded-4 shadow-sm">
-    <h2 class="text-primary fw-bold mb-3">Bienvenido Estudiante</h2>
-    <h4 class="text-dark mb-2">EduTech Innovators SPA</h4>
-    <p class="mb-3 text-secondary">
-      EduTech es una empresa chilena destacada en la digitalización de la educación. Ahora también gestiona recursos como libros para sus estudiantes.
-    </p>
-    <p class="text-secondary">
-      Bienvenido a la plataforma de gestión de <strong>libros</strong>, donde podrás registrar, buscar y organizar fácilmente los títulos disponibles.
-    </p>
-  </div>
-</section>
-<section class="container my-5">
-  <h4 class="mb-5 text-center">🎯 Beneficios de nuestra biblioteca digital</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle" id="tablaPrestamos">
+          <thead class="table-danger">
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Libro</th>
+              <th>Fecha Préstamo</th>
+              <th>Fecha Devolución</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se insertarán los préstamos dinámicamente -->
+          </tbody>
+        </table>
+      </div>
 
-  <!-- Bloque 1 -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="pictures/home_Marketing Digital.webp" alt="Acceso 24/7" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Acceso 24/7</h5>
-      <p>Consulta el catálogo y reserva libros desde cualquier lugar, en cualquier momento. Nuestra plataforma está disponible en línea todo el día.</p>
-    </div>
-  </div>
-
-  <!-- Bloque 2 -->
-  <div class="row align-items-center mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
-      <img src="pictures/home_Data Science y Análisis de Datos.png" alt="Organización" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Organiza tus préstamos</h5>
-      <p>Lleva el control de tus reservas, devoluciones y fechas límite fácilmente. Todo desde una interfaz intuitiva.</p>
+      <!-- Botón de descarga al fondo -->
+      <div class="text-end mt-3">
+        <button class="btn btn-success" onclick="exportarPrestamosCSV()">⬇️ Descargar Préstamos (Excel)</button>
+      </div>
     </div>
   </div>
-
-  <!-- Bloque 3 -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="pictures/baner3.jpg" alt="Soporte" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Soporte estudiantil</h5>
-      <p>Reporta incidencias, recibe ayuda técnica y accede a recursos útiles desde cualquier sede o dispositivo.</p>
-    </div>
-  </div>
-</section>
+</div>
 
 
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app_prestamo_E.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/app_navbar.js"></script>
-
 
 </body>
 </html>
+

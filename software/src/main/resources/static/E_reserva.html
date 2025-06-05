@@ -132,113 +132,94 @@
     <!-- Íconos y enlaces esenciales -->
     <div class="d-flex align-items-center flex-wrap position-relative">
       <a href="C_home.html" class="nav-link"><i class="fa-solid fa-house me-1"></i> Inicio</a>
-      <a href="#" class="nav-link"><i class="fa-solid fa-user-graduate me-1"></i> Estudiante</a>
-      <a href="E_carro.html" class="nav-link"><i class="fa fa-shopping-cart me-1"></i> Carrito</a>
+      <a href="T_index.html" class="nav-link"><i class="fa-solid fa-id-card me-1"></i> Trabajador</a>
       <a href="E_login.html" class="nav-link"><i class="fa-solid fa-right-from-bracket me-1"></i> Salir</a>
     </div>
+
   </div>
 </nav>
 
 <!-- Menú lateral -->
 <div class="side-menu" id="sideMenu">
-  <a href="A_registrarTrabajador.html"><i class="fa-solid fa-users-gear me-2"></i> Registro Trabajadores</a>
   <a href="C_reporte.html"><i class="fa-solid fa-bug me-2"></i> Reportar Incidencia</a>
   <a href="#"><i class="fa-solid fa-bell me-2"></i> Notificaciones</a>
+  <a href="E_reserva.html"><i class="fa-solid fa-calendar-check me-2"></i> Reservar</a>
+  <a href="E_prestamo.html"><i class="fa-solid fa-book me-2"></i> Préstamos</a>
 </div>
 
 <!-- Overlay para cerrar menú -->
 <div class="overlay" id="overlay"></div>
 
+<!-- Formulario de Reserva -->
 <div class="container my-5">
-  <h2 class="mb-4 text-center">Libros Disponibles</h2>
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <div class="card shadow rounded-4">
+    <div class="card-body p-5">
+      <h2 class="mb-4 text-center"><i class="fa-solid fa-book me-2"></i>Gestión de Reservas</h2>
+      <form id="formReserva" onsubmit="return false;">
+        <div class="mb-3">
+          <label for="usuarioId" class="form-label">Usuario</label>
+          <select class="form-select" id="usuarioId" required>
+            <option value="">Seleccione un usuario</option>
+          </select>
+        </div>
 
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">Cien años de soledad</h5>
-          <p class="card-text"><strong>Autor:</strong> Gabriel García Márquez</p>
-          <p class="card-text">Una obra maestra del realismo mágico y la literatura latinoamericana.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(1)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
+        <div class="mb-3">
+          <label for="libroId" class="form-label">Libro</label>
+          <select class="form-select" id="libroId" required>
+            <option value="">Seleccione un libro</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
+          <input type="date" class="form-control" id="fechaReserva" required />
+        </div>
+
+        <div class="d-grid">
+          <button type="button" id="botonFormularioReserva" class="btn btn-danger btn-lg rounded-pill" onclick="agregarReserva()">
+            <i class="fa-solid fa-paper-plane me-2"></i>Agregar Reserva
           </button>
         </div>
-      </div>
+      </form>
     </div>
-
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">1984</h5>
-          <p class="card-text"><strong>Autor:</strong> George Orwell</p>
-          <p class="card-text">Una novela distópica sobre vigilancia y totalitarismo.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(2)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">El Principito</h5>
-          <p class="card-text"><strong>Autor:</strong> Antoine de Saint-Exupéry</p>
-          <p class="card-text">Una historia poética sobre la infancia, el amor y la amistad.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(3)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">Sapiens</h5>
-          <p class="card-text"><strong>Autor:</strong> Yuval Noah Harari</p>
-          <p class="card-text">Un recorrido por la historia de la humanidad desde sus orígenes.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(4)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">Don Quijote de la Mancha</h5>
-          <p class="card-text"><strong>Autor:</strong> Miguel de Cervantes</p>
-          <p class="card-text">Las aventuras del caballero loco y su fiel escudero Sancho Panza.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(5)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title">Harry Potter y la piedra filosofal</h5>
-          <p class="card-text"><strong>Autor:</strong> J.K. Rowling</p>
-          <p class="card-text">El inicio de la saga mágica más famosa del mundo.</p>
-          <button class="btn btn-primary rounded-pill" onclick="carrito.agregarLibro(6)">
-            <i class="fa fa-cart-plus me-1"></i> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<!-- Scripts necesarios de Bootstrap -->
+
+<!-- Tabla de Reservas -->
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="mb-4 text-primary fw-bold">Listado de Reservas</h4>
+      <button class="btn btn-outline-danger mb-3" onclick="listarReservasE()">🔄 Ver Reservas</button>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle" id="tablaReservas">
+          <thead class="table-danger">
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Libro</th>
+              <th>Fecha Reserva</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se insertarán las reservas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-success" onclick="exportarReservasCSV()">
+          ⬇️ Descargar Reservas (Excel)
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/app_carrito.js"></script>
+<script src="js/app_reservaE.js"></script>
 <script src="js/app_navbar.js"></script>
-
-
 </body>
 </html>
