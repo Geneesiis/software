@@ -165,103 +165,87 @@
 <section class="container my-5">
   <h4 class="mb-5 text-center">🎯 Beneficios de nuestra biblioteca digital</h4>
 
-  <!-- Bloque 1 -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="pictures/home_Marketing Digital.webp" alt="Acceso 24/7" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Acceso 24/7</h5>
-      <p>Consulta el catálogo y reserva libros desde cualquier lugar, en cualquier momento. Nuestra plataforma está disponible en línea todo el día.</p>
-    </div>
-  </div>
 
-  <!-- Bloque 2 -->
-  <div class="row align-items-center mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
-      <img src="pictures/home_Data Science y Análisis de Datos.png" alt="Organización" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Organiza tus préstamos</h5>
-      <p>Lleva el control de tus reservas, devoluciones y fechas límite fácilmente. Todo desde una interfaz intuitiva.</p>
-    </div>
-  </div>
-
-  <!-- Bloque 3 -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="pictures/baner3.jpg" alt="Soporte" class="img-fluid rounded shadow-sm">
-    </div>
-    <div class="col-md-6">
-      <h5 class="fw-bold">Soporte estudiantil</h5>
-      <p>Reporta incidencias, recibe ayuda técnica y accede a recursos útiles desde cualquier sede o dispositivo.</p>
-    </div>
+<section class="container my-5">
+  <h3 class="mb-4 text-center">Catálogo de Libros</h3>
+  <div id="catalogoLibros" class="d-flex flex-wrap justify-content-center gap-4">
+    <!-- Tarjetas se insertarán aquí -->
   </div>
 </section>
 
-<!-- Botón flotante con ícono de soporte -->
-<div id="chatBoton" onclick="toggleChat()" style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #f4436b;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    cursor: pointer;
-    z-index: 1000;">
-    💡
-</div>
+<!-- Contenedor para la tabla -->
+<section class="container my-5">
+  <h3 class="mb-4">Catálogo de Libros</h3>
+  <div id="catalogoLibros">
+    <!-- La tabla se insertará aquí -->
+  </div>
+</section>
 
-<!-- Ventana del chat estilo Crisp -->
-<div id="chatContenedor" style="
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 340px;
-    max-height: 500px;
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-    font-family: 'Segoe UI', sans-serif;
-    z-index: 1000;
-    overflow: hidden;">
-    
-    <div style="background-color: #f4436b; color: white; padding: 12px 16px; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-        Conversación
-        <span onclick="toggleChat()" style="cursor: pointer;">✖</span>
-    </div>
+<script>
+  async function mostrarCatalogo() {
+    const contenedor = document.getElementById('catalogoLibros');
+    contenedor.innerHTML = 'Cargando catálogo...';
 
-    <div id="chatMessages" style="
-        padding: 12px;
-        height: 300px;
-        overflow-y: auto;
-        background-color: #fff7fa;">
-        <div style="color: #f4436b; margin-bottom: 8px;"><strong>Soporte:</strong> ¡Hola! ¿En qué te puedo ayudar? 😊</div>
-    </div>
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/libros'); // Cambia la URL si es necesario
+      if (!response.ok) throw new Error('Error HTTP: ' + response.status);
+      const libros = await response.json();
 
-    <div style="display: flex; border-top: 1px solid #eee;">
-        <input id="chatInput" type="text" placeholder="Escribe aquí tu mensaje..." style="
-            flex: 1;
-            padding: 10px;
-            border: none;
-            font-size: 14px;">
-        <button onclick="enviarMensaje()" style="
-            background-color: #f4436b;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-            font-weight: bold;">➤</button>
-    </div>
-</div>
+      if (libros.length === 0) {
+        contenedor.innerHTML = '<p>No hay libros disponibles.</p>';
+        return;
+      }
+
+      // Crear tabla
+      const tabla = document.createElement('table');
+      tabla.className = 'table table-striped table-hover';
+
+      // Crear encabezado
+      tabla.innerHTML = `
+        <thead class="table-dark">
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Descripción</th>
+            <th>Páginas</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+          </tr>
+        </thead>
+      `;
+
+      // Crear cuerpo de la tabla
+      const tbody = document.createElement('tbody');
+      libros.forEach(libro => {
+        const fila = document.createElement('tr');
+
+        fila.innerHTML = `
+          <td>${libro.titulo}</td>
+          <td>${libro.autor}</td>
+          <td>${libro.editorial}</td>
+          <td>${libro.descripcion}</td>
+          <td>${libro.paginas}</td>
+          <td>${libro.stock}</td>
+          <td>${libro.categoria}</td>
+        `;
+
+        tbody.appendChild(fila);
+      });
+
+      tabla.appendChild(tbody);
+      contenedor.innerHTML = '';  // Limpiar mensaje de carga
+      contenedor.appendChild(tabla);
+
+    } catch (error) {
+      contenedor.innerHTML = `<p class="text-danger">Error cargando catálogo: ${error.message}</p>`;
+      console.error(error);
+    }
+  }
+
+  window.onload = mostrarCatalogo;
+</script>
+
 
 
 
@@ -301,7 +285,6 @@
       <div class="col-md-4 mb-3">
         <h5>Enlaces Rápidos</h5>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-white text-decoration-none">Inicio</a></li>
           <li><a href="#" class="text-white text-decoration-none">Catálogo</a></li>
           <li><a href="#" class="text-white text-decoration-none">Reservas</a></li>
           <li><a href="#" class="text-white text-decoration-none">Préstamos</a></li>
