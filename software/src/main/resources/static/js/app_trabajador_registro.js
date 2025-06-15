@@ -71,7 +71,8 @@ function buscarTrabajador(id) {
         .then(trabajador => {
             document.getElementById("nombre").value = trabajador.nombre;
             document.getElementById("email").value = trabajador.email;
-            document.getElementById("password").value = trabajador.password;
+            // No es recomendable mostrar la contraseña, por seguridad se deja vacío para editar
+            document.getElementById("password").value = "";
 
             trabajadorEnEdicionId = trabajador.id;
 
@@ -120,5 +121,8 @@ function limpiarFormularioTrabajador() {
     trabajadorEnEdicionId = null;
 }
 
-// Llamar lista al cargar
-document.addEventListener("DOMContentLoaded", listarTrabajadores);
+// Llamar lista y limpiar formulario al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    limpiarFormularioTrabajador();
+    listarTrabajadores();
+});

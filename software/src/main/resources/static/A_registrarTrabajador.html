@@ -155,24 +155,53 @@
   <div class="card shadow rounded-4">
     <div class="card-body p-5">
       <h2 class="mb-4 text-center"><i class="fa-solid fa-user-tie me-2"></i>Registro de Trabajadores</h2>
-      <form id="formRegistro" onsubmit="return false;">
+      <form id="formRegistro" onsubmit="return false;" autocomplete="off">
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre completo</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre completo" required />
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            name="nombre"
+            placeholder="Ingrese nombre completo"
+            required
+            autocomplete="off"
+          />
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Correo electrónico</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required />
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="correo@ejemplo.com"
+            required
+            autocomplete="off"
+          />
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña segura" required />
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Contraseña segura"
+            required
+            autocomplete="new-password"
+          />
         </div>
 
         <div class="d-grid">
-          <button type="button" class="btn btn-primary btn-lg rounded-pill" onclick="registrar()">
+          <button
+            id="botonTrabajador"
+            type="button"
+            class="btn btn-primary btn-lg rounded-pill"
+            onclick="registrar()"
+          >
             <i class="fa-solid fa-user-plus me-2"></i> Registrar Trabajador
           </button>
         </div>
@@ -180,6 +209,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Tabla de Trabajadores -->
 <div class="container my-5">
@@ -208,7 +238,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app_trabajador_registro.js"></script>
 <script src="js/app_navbar.js"></script>
-
 
 </body>
 </html>

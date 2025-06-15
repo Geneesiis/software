@@ -16,7 +16,6 @@ function listarReportes() {
                         <td>${reporte.titulo}</td>
                         <td>${reporte.descripcion}</td>
                         <td> 
-                            <button class="btn btn-danger btn-sm" onclick="eliminarReporte(${reporte.id})">🗑️ Eliminar</button> 
                             <button class="btn btn-warning btn-sm" onclick="buscarReporte(${reporte.id})">✏️ Editar</button> 
                         </td>
                     </tr>
