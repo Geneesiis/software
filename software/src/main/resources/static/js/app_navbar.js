@@ -2,11 +2,12 @@ const hamburgerBtn = document.getElementById('hamburgerBtn');
 const sideMenu = document.getElementById('sideMenu');
 const overlay = document.getElementById('overlay');
 
-function toggleMenu() {
+hamburgerBtn.addEventListener('click', () => {
   sideMenu.classList.toggle('active');
   overlay.classList.toggle('active');
-}
+});
 
-hamburgerBtn.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', toggleMenu);
-
+overlay.addEventListener('click', () => {
+  sideMenu.classList.remove('active');
+  overlay.classList.remove('active');
+});

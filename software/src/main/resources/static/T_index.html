@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EduTech - Biblioteca</title>
+  <title>Biblioteca Virtual Duoc - Gestión de Libros</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
@@ -21,28 +21,34 @@
     .topbar .nav-link {
       color: white;
       margin-right: 20px;
+      white-space: nowrap;
     }
 
     .topbar .logo {
       font-size: 1.5rem;
       font-weight: bold;
-      color: #ffc107;
+      color: white; /* Texto blanco */
+      user-select: none;
     }
 
-    .search-bar input {
+    .search-bar input,
+    .search-bar select {
       border: none;
       padding: 6px 12px;
     }
 
     /* Estilo para el menú hamburguesa siempre visible en PC */
     .hamburger {
-      font-size: 1.8rem;
       cursor: pointer;
       color: white;
       display: flex;
       align-items: center;
       user-select: none;
       margin-right: 20px;
+    }
+    .hamburger i {
+      font-size: 1.2rem; /* Icono hamburguesa más pequeño */
+      color: white;
     }
 
     /* Menú lateral desplegable */
@@ -52,7 +58,7 @@
       left: -260px;
       width: 250px;
       height: 100vh;
-      background-color: #131921;
+      background-color: rgba(19, 25, 33, 0.85); /* Barra lateral un poco transparente */
       color: white;
       box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       transition: left 0.3s ease;
@@ -72,6 +78,7 @@
       font-weight: 500;
       border-bottom: 1px solid #2c2f38;
       transition: background-color 0.2s ease;
+      white-space: nowrap;
     }
 
     .side-menu a:hover {
@@ -99,7 +106,51 @@
     .topbar .left-section {
       display: flex;
       align-items: center;
+      flex-wrap: nowrap;
+      gap: 1rem;
     }
+
+    /* Tabla responsiva */
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Evita que textos largos rompan el diseño en celdas */
+    #tablaLibros th,
+    #tablaLibros td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+      vertical-align: middle;
+    }
+
+    /* En móviles ocultamos columnas menos importantes */
+    /* ID y Stock se muestran siempre */
+    @media (max-width: 767.98px) {
+      #tablaLibros th:nth-child(4),  /* Editorial */
+      #tablaLibros td:nth-child(4),
+      #tablaLibros th:nth-child(5),  /* Descripción */
+      #tablaLibros td:nth-child(5),
+      #tablaLibros th:nth-child(6),  /* Categoría */
+      #tablaLibros td:nth-child(6),
+      #tablaLibros th:nth-child(7),  /* Páginas */
+      #tablaLibros td:nth-child(7) {
+        display: none;
+      }
+    }
+
+    /* Ajuste para formulario en móviles */
+    form#formLibro .col {
+      min-width: 0;
+    }
+
+    form#formLibro input,
+    form#formLibro select {
+      min-width: 0;
+    }
+
   </style>
 </head>
 <body>
@@ -108,38 +159,35 @@
 <nav class="topbar py-2 position-relative" style="z-index: 1030;">
   <div class="container-fluid px-4 d-flex align-items-center justify-content-between flex-wrap">
 
-    <!-- Izquierda: hamburguesa + logo + sedes -->
+    <!-- Izquierda: hamburguesa + logo -->
     <div class="left-section d-flex align-items-center">
       <div class="hamburger me-3" id="hamburgerBtn" title="Abrir menú" style="cursor:pointer;">
-        <i class="fa-solid fa-bars fa-lg"></i>
+        <i class="fa-solid fa-bars fa-sm"></i>
       </div>
-      <span class="logo me-3">EduTech</span>
-      <a href="#" class="nav-link d-flex align-items-center">
-        <i class="fa-solid fa-building me-1"></i>
-        <span><strong>Sedes</strong></span>
-      </a>
+      <span class="logo me-3" aria-label="Nombre del sitio">Biblioteca Virtual Duoc</span>
     </div>
 
     <!-- Buscador -->
     <div class="search-bar d-flex flex-grow-1 mx-4" style="max-width: 600px;">
-      <select class="form-select w-auto">
+      <select class="form-select w-auto" aria-label="Filtrar búsqueda">
         <option value="all">Todos</option>
         <option value="libros">Libros</option>
       </select>
-      <input type="text" class="form-control" placeholder="Buscar libro" />
+      <input type="search" class="form-control" placeholder="Buscar libro" aria-label="Buscar libro" />
     </div>
 
     <!-- Enlaces esenciales -->
     <div class="d-flex align-items-center flex-wrap position-relative">
-      <a href="A_gestion_cuentas.html" class="nav-link"><i class="fa-solid fa-user-gear me-1"></i> Administrador</a>
+      <a href="T_index.html" class="nav-link"><i class="fa-solid fa-user-gear me-1"></i> Trabajador</a>
       <a href="E_login.html" class="nav-link"><i class="fa-solid fa-right-from-bracket me-1"></i> Salir</a>
     </div>
 
   </div>
 </nav>
 
+
 <!-- Menú lateral para administrador -->
-<div class="side-menu" id="sideMenu">
+<div class="side-menu" id="sideMenu" aria-label="Menú lateral">
   <a href="T_prestamo.html"><i class="fa-solid fa-handshake me-2"></i> Préstamo</a>
   <a href="A_registrarTrabajador.html"><i class="fa-solid fa-users-gear me-2"></i> Registro Trabajadores</a>
   <a href="A_gestion_cuentas.html"><i class="fa-solid fa-user-graduate me-2"></i> Gestión Cuentas Alumnos</a>
@@ -149,17 +197,15 @@
 </div>
 
 <!-- Overlay para cerrar menú -->
-<div class="overlay" id="overlay"></div>
-
-
+<div class="overlay" id="overlay" tabindex="-1"></div>
 
 <!-- Sección de bienvenida -->
-<section class="container my-5">
+<section class="container my-5" aria-label="Bienvenida">
   <div class="p-5 bg-light rounded-4 shadow-sm">
     <h2 class="text-primary fw-bold mb-3">Bienvenido Trabajador</h2>
-    <h4 class="text-dark mb-2">EduTech Innovators SPA</h4>
+    <h4 class="text-dark mb-2">Biblioteca Virtual Duoc</h4>
     <p class="mb-3 text-secondary">
-      EduTech es una empresa chilena que moderniza la educación. Como trabajador, tu rol es clave en la gestión de recursos para estudiantes y personal.
+      Biblioteca Virtual Duoc es una plataforma chilena que moderniza la gestión bibliotecaria. Como trabajador, tu rol es clave en la gestión de recursos para estudiantes y personal.
     </p>
     <p class="text-secondary">
       Desde esta plataforma puedes administrar préstamos, reservas, incidencias y más. ¡Gracias por contribuir al desarrollo de la educación digital!
@@ -167,7 +213,7 @@
   </div>
 </section>
 
-
+<!-- Gestión de libros -->
 <div class="container py-5">
   <h1 class="text-center mb-4">📚 Gestión de Libros</h1>
 
@@ -175,51 +221,53 @@
     <div class="card-body">
       <h4 id="formTitulo">Agregar un nuevo libro</h4>
 
-      <div class="row g-2">
-        <div class="col">
-          <input class="form-control" type="text" id="titulo" placeholder="Título del libro" />
+      <form id="formLibro" novalidate>
+        <div class="row g-2">
+          <div class="col">
+            <input class="form-control" type="text" id="titulo" placeholder="Título del libro" required aria-required="true" />
+          </div>
+          <div class="col">
+            <input class="form-control" type="text" id="autor" placeholder="Autor" required aria-required="true" />
+          </div>
+          <div class="col">
+            <input class="form-control" type="text" id="editorial" placeholder="Editorial" />
+          </div>
         </div>
-        <div class="col">
-          <input class="form-control" type="text" id="autor" placeholder="Autor" />
-        </div>
-        <div class="col">
-          <input class="form-control" type="text" id="editorial" placeholder="Editorial" />
-        </div>
-      </div>
 
-      <div class="row g-2 mt-2">
-        <div class="col">
-          <input class="form-control" type="text" id="descripcion" placeholder="Descripción" />
+        <div class="row g-2 mt-2">
+          <div class="col">
+            <input class="form-control" type="text" id="descripcion" placeholder="Descripción" />
+          </div>
+          <div class="col">
+            <input class="form-control" type="text" id="categoria" placeholder="Categoría" />
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" id="paginas" placeholder="Número de páginas" min="1" />
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" id="stock" placeholder="Stock" min="0" />
+          </div>
         </div>
-        <div class="col">
-          <input class="form-control" type="text" id="categoria" placeholder="Categoría" />
-        </div>
-        <div class="col">
-          <input class="form-control" type="number" id="paginas" placeholder="Número de páginas" />
-        </div>
-        <div class="col">
-          <input class="form-control" type="number" id="stock" placeholder="Stock" />
-        </div>
-      </div>
 
-      <div class="row g-2 mt-3">
-        <div class="col d-grid">
-          <button type="button" id="botonFormulario" class="btn btn-success btn-lg rounded-pill">
-            <i class="fa-solid fa-plus me-2"></i><span id="textoBoton">Agregar Libro</span>
-          </button>
+        <div class="row g-2 mt-3">
+          <div class="col d-grid">
+            <button type="submit" id="botonFormulario" class="btn btn-success btn-lg rounded-pill">
+              <i class="fa-solid fa-plus me-2"></i><span id="textoBoton">Agregar Libro</span>
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
+
     </div>
   </div>
 </div>
 
-
 <!-- Sección listado de libros -->
-<section class="container my-5">
+<section class="container my-5" aria-label="Listado de libros">
   <div class="card shadow-sm">
     <div class="card-body">
       <h4 class="mb-4 text-primary fw-bold">Listado de Libros</h4>
-      <button class="btn btn-outline-primary mb-3" onclick="listarLibros()">🔄 Refrescar Lista</button>
+      <button class="btn btn-outline-primary mb-3" type="button" onclick="listarLibros()">🔄 Refrescar Lista</button>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle" id="tablaLibros">
           <thead class="table-dark">
@@ -230,9 +278,9 @@
               <th>Editorial</th>
               <th>Descripción</th>
               <th>Categoría</th>
-              <th>paginas</th>
-              <th>stock</th>
-              <th>accion</th>
+              <th>Páginas</th>
+              <th>Stock</th>
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -243,7 +291,6 @@
     </div>
   </div>
 </section>
-
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
