@@ -161,20 +161,6 @@
 <div class="overlay" id="overlay" tabindex="-1"></div>
 
 
-<!-- Sección de bienvenida -->
-<section class="container my-5">
-  <div class="p-5 bg-light rounded-4 shadow-sm">
-    <h2 class="text-primary fw-bold mb-3">Bienvenido Estudiante</h2>
-    <h4 class="text-dark mb-2">EduTech Innovators SPA</h4>
-    <p class="mb-3 text-secondary">
-      EduTech es una empresa chilena destacada en la digitalización de la educación. Ahora también gestiona recursos como libros para sus estudiantes.
-    </p>
-    <p class="text-secondary">
-      Bienvenido a la plataforma de gestión de <strong>libros</strong>, donde podrás registrar, buscar y organizar fácilmente los títulos disponibles.
-    </p>
-  </div>
-</section>
-
 <section class="container my-5">
   <h3 class="mb-4 text-center">Catálogo de Libros</h3>
   <div id="catalogoLibros" class="d-flex flex-wrap justify-content-center gap-4">
@@ -196,7 +182,7 @@
     contenedor.innerHTML = 'Cargando catálogo...';
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/libros'); // Cambia la URL si es necesario
+      const response = await fetch('http://localhost:8080/api/v1/libros');
       if (!response.ok) throw new Error('Error HTTP: ' + response.status);
       const libros = await response.json();
 
@@ -205,11 +191,9 @@
         return;
       }
 
-      // Crear tabla
       const tabla = document.createElement('table');
       tabla.className = 'table table-striped table-hover';
 
-      // Crear encabezado
       tabla.innerHTML = `
         <thead class="table-dark">
           <tr>
@@ -224,7 +208,6 @@
         </thead>
       `;
 
-      // Crear cuerpo de la tabla
       const tbody = document.createElement('tbody');
       libros.forEach(libro => {
         const fila = document.createElement('tr');
@@ -243,7 +226,7 @@
       });
 
       tabla.appendChild(tbody);
-      contenedor.innerHTML = '';  // Limpiar mensaje de carga
+      contenedor.innerHTML = '';
       contenedor.appendChild(tabla);
 
     } catch (error) {
@@ -254,9 +237,6 @@
 
   window.onload = mostrarCatalogo;
 </script>
-
-
-
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -283,30 +263,27 @@
     <div class="row text-start">
       <div class="col-md-4 mb-3">
         <h5>Sobre Nosotros</h5>
-        <p>EduTech es una empresa líder en digitalización educativa y gestión de recursos bibliotecarios para estudiantes en Chile.</p>
+        <p>Biblioteca Virtual Duoc es una institución líder en digitalización educativa y gestión de recursos bibliotecarios para estudiantes en Chile.</p>
       </div>
       <div class="col-md-4 mb-3">
         <h5>Contacto</h5>
-        <p>Email: contacto@edutech.cl</p>
+        <p>Email: contacto@bibliotecaduoc.cl</p>
         <p>Teléfono: +56 2 1234 5678</p>
         <p>Dirección: Av. Siempre Viva 123, Santiago, Chile</p>
       </div>
       <div class="col-md-4 mb-3">
         <h5>Enlaces Rápidos</h5>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-white text-decoration-none">Catálogo</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Reservas</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Préstamos</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Soporte</a></li>
+          <li><a href="E_catalogo.html" class="text-white text-decoration-none">Catálogo</a></li>
+          <li><a href="E_reserva.html" class="text-white text-decoration-none">Reservas</a></li>
+          <li><a href="E_prestamo.html" class="text-white text-decoration-none">Préstamos</a></li>
+          <li><a href="C_reporte.html" class="text-white text-decoration-none">Soporte</a></li>
         </ul>
       </div>
     </div>
-    <p class="text-center mt-3 mb-0">&copy; 2025 EduTech - Biblioteca Universitaria. Todos los derechos reservados.</p>
+    <p class="text-center mt-3 mb-0">&copy; 2025 Biblioteca Virtual Duoc. Todos los derechos reservados.</p>
   </div>
 </footer>
-
-
-
 
 </body>
 </html>

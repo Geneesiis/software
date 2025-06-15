@@ -258,10 +258,118 @@
   </div>
 </div>
 
+<!-- Botón flotante con ícono de soporte -->
+<div id="chatBoton" onclick="toggleChat()" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f4436b;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1000;">
+    💡
+</div>
+
+<!-- Ventana del chat estilo Crisp -->
+<div id="chatContenedor" style="
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 340px;
+    max-height: 500px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 1000;
+    overflow: hidden;">
+    
+    <div style="background-color: #f4436b; color: white; padding: 12px 16px; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+        Conversación
+        <span onclick="toggleChat()" style="cursor: pointer;">✖</span>
+    </div>
+
+    <div id="chatMessages" style="
+        padding: 12px;
+        height: 300px;
+        overflow-y: auto;
+        background-color: #fff7fa;">
+        <div style="color: #f4436b; margin-bottom: 8px;"><strong>Soporte:</strong> ¡Hola! ¿En qué te puedo ayudar? 😊</div>
+    </div>
+
+    <div style="display: flex; border-top: 1px solid #eee;">
+        <input id="chatInput" type="text" placeholder="Escribe aquí tu mensaje..." style="
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-size: 14px;">
+        <button onclick="enviarMensaje()" style="
+            background-color: #f4436b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;">➤</button>
+    </div>
+</div>
+<script src="js/app_chat.js"></script>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app_reporte.js"></script> <!-- Tu script externo -->
 <script src="js/app_navbar.js"></script>
+
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <div class="mb-3">
+      <a href="https://www.facebook.com/tuBiblioteca" target="_blank" rel="noopener" class="text-white mx-3 fs-4" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://twitter.com/tuBiblioteca" target="_blank" rel="noopener" class="text-white mx-3 fs-4" aria-label="Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/tuBiblioteca" target="_blank" rel="noopener" class="text-white mx-3 fs-4" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/tuBiblioteca" target="_blank" rel="noopener" class="text-white mx-3 fs-4" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+    <hr class="bg-secondary" />
+    <div class="row text-start">
+      <div class="col-md-4 mb-3">
+        <h5>Sobre Nosotros</h5>
+        <p>Biblioteca Virtual Duoc es una empresa líder en digitalización educativa y gestión de recursos bibliotecarios para estudiantes en Chile.</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Contacto</h5>
+        <p>Email: contacto@bibliotecavirtualduoc.cl</p>
+        <p>Teléfono: +56 2 1234 5678</p>
+        <p>Dirección: Av. Siempre Viva 123, Santiago, Chile</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Enlaces Rápidos</h5>
+        <ul class="list-unstyled">
+          <li><a href="E_index.html" class="text-white text-decoration-none">Inicio</a></li>
+          <li><a href="E_catalogo.html" class="text-white text-decoration-none">Catálogo</a></li>
+          <li><a href="E_reserva.html" class="text-white text-decoration-none">Reservas</a></li>
+          <li><a href="E_prestamo.html" class="text-white text-decoration-none">Préstamos</a></li>
+          <li><a href="C_reporte.html" class="text-white text-decoration-none">Soporte</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-center mt-3 mb-0">&copy; 2025 Biblioteca Virtual Duoc - Biblioteca Universitaria. Todos los derechos reservados.</p>
+  </div>
+</footer>
 
 </body>
 </html>

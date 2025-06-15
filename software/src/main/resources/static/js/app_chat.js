@@ -29,9 +29,11 @@ function agregarMensaje(remitente, texto) {
 function obtenerRespuestaAutomatica(mensaje) {
     const msg = mensaje.toLowerCase();
     if (msg.includes("hola")) return "¡Hola! ¿En qué puedo ayudarte?";
-    if (msg.includes("libro")) return "Puedes consultar libros disponibles en la sección de biblioteca.";
+    if (msg.includes("libro")) return "Puedes consultar libros disponibles en la sección de Catalogo.";
+    if (msg.includes("catalogo")) return "Puedes consultar libros disponibles en la sección de Catalogo.";
     if (msg.includes("reserva")) return "Para hacer una reserva, ve al módulo de reservas.";
     if (msg.includes("gracias")) return "¡De nada! Estoy para ayudarte.";
+    if (msg.includes("ayuda")) return "Puedes reportar cualquier insidencia en Reporte.";
     return "Lo siento, no entendí eso. ¿Puedes reformularlo?";
 }
 
