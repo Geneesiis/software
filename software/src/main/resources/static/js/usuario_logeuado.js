@@ -2,9 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const id = sessionStorage.getItem("idUsuario");
   const nombre = sessionStorage.getItem("nombreUsuario");
 
-  // Rellenar input oculto con el ID
-  document.getElementById("usuarioId").value = id;
+  // Rellenar input oculto con el ID del usuario
+  const usuarioIdInput = document.getElementById("usuarioId");
+  if (usuarioIdInput) {
+    usuarioIdInput.value = id || "";
+  }
 
-  // Mostrar nombre del usuario logueado en el texto informativo
-  document.getElementById("nombreUsuarioTexto").textContent = nombre;
+  // Opcional: Mostrar el nombre del usuario en algún lugar, si quieres
+  const nombreUsuarioTexto = document.getElementById("nombreUsuarioTexto");
+  if (nombreUsuarioTexto) {
+    nombreUsuarioTexto.textContent = nombre || "";
+  }
 });
