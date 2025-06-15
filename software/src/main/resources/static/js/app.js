@@ -152,5 +152,11 @@ function limpiarFormulario() {
     LibroEnEdicionId = null;
 }
 
+// Al cargar la página, asegurarse que el botón está en modo agregar
+window.onload = function () {
+    limpiarFormulario();
+};
+
+
 // Cargar libros al iniciar
 listarLibros();
